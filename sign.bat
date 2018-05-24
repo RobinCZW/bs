@@ -1,0 +1,1 @@
+@"%JAVA_HOME%\bin\jarsigner" -keystore "../papers.jks" -storepass %SP% -keypass %KP% %1 %AL%

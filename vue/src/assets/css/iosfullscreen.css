@@ -1,0 +1,12 @@
+body:before {
+  display: block;
+  content: " ";
+  height: 20px;
+  top: 0;
+  background: #508CEE;
+  position: -webkit-sticky;
+  position: sticky;
+}
+body {
+  height: calc(100% - 20px);
+}

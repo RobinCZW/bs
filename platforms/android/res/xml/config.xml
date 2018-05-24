@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.example.robin.papers" version="4.4.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <feature name="Whitelist">
+        <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="AndroidFullScreen">
+        <param name="android-package" value="com.mesmotronic.plugins.FullScreenPlugin" />
+    </feature>
+    <feature name="File">
+        <param name="android-package" value="org.apache.cordova.file.FileUtils" />
+        <param name="onload" value="true" />
+    </feature>
+    <allow-navigation href="cdvfile:*" />
+    <feature name="FileTransfer">
+        <param name="android-package" value="org.apache.cordova.filetransfer.FileTransfer" />
+    </feature>
+    <feature name="Camera">
+        <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
+    </feature>
+    <feature name="Keyboard">
+        <param name="android-package" value="io.ionic.keyboard.IonicKeyboard" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="InAppBrowser">
+        <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
+    </feature>
+    <feature name="WebIntent">
+        <param name="android-package" value="com.borismus.webintent.WebIntent" />
+    </feature>
+    <feature name="Umeng">
+        <param name="android-package" value="com.umeng.plugin.UMPlugin" />
+    </feature>
+    <feature name="Clipboard">
+        <param name="android-package" value="com.verso.cordova.clipboard.Clipboard" />
+    </feature>
+    <feature name="QQSDK">
+        <param name="android-package" value="me.vanpan.qqsdk.QQSDKPlugin" />
+    </feature>
+    <access origin="https://openmobile.qq.com/*" />
+    <access origin="http://qzonestyle.gtimg.cn/*" />
+    <access origin="http://pub.idqqimg.com/*" />
+    <access origin="http://qzs.qq.com/*" />
+    <access origin="http://m.qzone.com/*" />
+    <access origin="http://*.ptlogin2.qq.com/*" />
+    <access origin="http://*.qq.com/*" />
+    <access origin="http://q2.qlogo.cn/*" />
+    <feature name="AliPay">
+        <param name="android-package" value="com.offbye.cordova.alipay.AliPay" />
+    </feature>
+    <feature name="MultiImagePicker">
+        <param name="android-package" value="com.lihau.imagepicker.MultiImagePicker" />
+    </feature>
+    <name>期末考啦</name>
+    <description>
+    </description>
+    <author email="develop@finalexam.cn" href="https://finalexam.cn">
+        期末考啦团队
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="content://*/*" />
+    <allow-intent href="file://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <icon src="res/icon.png" />
+    <allow-intent href="market:*" />
+    <preference name="loglevel" value="DEBUG" />
+    <preference name="webView" value="org.apache.cordova.x5engine.X5WebViewEngine" />
+    <preference name="appUserAgent" value="appX5" />
+    <preference name="android-minSdkVersion" value="15" />
+    <preference name="QQ_APP_ID" value="101369980" />
+    <preference name="KeyboardDisplayRequiresUserAction" value="false" />
+    <preference name="fullscreen" value="false" />
+    <preference name="android-fitsSystemWindows" value="true" />
+    <preference name="AndroidExtraFilesystems" value="sdcard" />
+    <preference name="AndroidLaunchMode" value="singleTask" />
+    <preference name="webview" value="org.apache.cordova.x5engine.X5WebViewEngine" />
+</widget>

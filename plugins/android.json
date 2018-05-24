@@ -1,0 +1,60 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "cn.finalexam.qimokaola"
+        },
+        "cordova-plugin-fullscreen": {
+            "PACKAGE_NAME": "cn.finalexam.qimokaola"
+        },
+        "cordova-plugin-x5engine-webview": {
+            "PACKAGE_NAME": "cn.finalexam.qimokaola"
+        },
+        "cordova-plugin-file-transfer": {
+            "PACKAGE_NAME": "cn.finalexam.qimokaola"
+        },
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "cn.finalexam.qimokaola"
+        },
+        "com.lihau.multiimagepicker": {
+            "PACKAGE_NAME": "cn.finalexam.qimokaola"
+        },
+        "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "cn.finalexam.qimokaola"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "cn.finalexam.qimokaola"
+        },
+        "com.borismus.webintent": {
+            "PACKAGE_NAME": "cn.finalexam.qimokaola"
+        },
+        "Umeng": {
+            "PACKAGE_NAME": "cn.finalexam.qimokaola"
+        },
+        "com.verso.cordova.clipboard": {
+            "PACKAGE_NAME": "com.example.robin.papers"
+        },
+        "cordova-plugin-qqsdk": {
+            "QQ_APP_ID": "101369980",
+            "PACKAGE_NAME": "com.example.robin.papers"
+        },
+        "cordova-plugin-offbye-alipay": {
+            "PARTNER_ID": "2088421692653019",
+            "PACKAGE_NAME": "com.example.robin.papers"
+        }
+    },
+    "dependent_plugins": {
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "cn.finalexam.qimokaola"
+        },
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "cn.finalexam.qimokaola"
+        }
+    }
+}

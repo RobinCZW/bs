@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.example.robin.papers" version="4.4.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>期末考啦</name>
+    <description>
+        
+    </description>
+    <author email="develop@finalexam.cn" href="https://finalexam.cn">
+        期末考啦团队
+    </author>
+    <content src="index.html" />
+	<!--content src="http://192.168.31.101:8081/" /-->
+    <plugin name="cordova-plugin-whitelist" spec="1" />
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="content://*/*" />
+    <allow-intent href="file://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+	<icon src="res/icon.png" />
+    <platform name="android">
+        <allow-intent href="market:*" />
+		<!--splash src="res/splash.png" />
+		<preference name="AutoHideSplashScreen" value="false" />
+		<preference name="SplashScreenDelay" value="5000" />
+		<preference name="ShowSplashScreenSpinner" value="false" /-->
+		<preference name="KeyboardDisplayRequiresUserAction" value="false" />
+		<preference name="fullscreen" value="false" />
+		<preference name="android-fitsSystemWindows" value="true" />
+		<preference name="AndroidExtraFilesystems" value="sdcard" />
+		<preference name="AndroidLaunchMode" value="singleTask" />
+		<preference name="webview" value="org.apache.cordova.x5engine.X5WebViewEngine" />
+    </platform>
+    <platform name="ios">
+        <allow-intent href="itms:*" />
+        <allow-intent href="itms-apps:*" />
+		<preference name="KeyboardDisplayRequiresUserAction" value="false" />
+    </platform>
+</widget>
