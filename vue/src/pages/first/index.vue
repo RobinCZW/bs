@@ -14,7 +14,7 @@ import FindPw from './findpw'
 import Complete from './complete'
 import services from 'utils/services'
 services
-export default { // 进入app后 登录 注册 忘记密码 快捷qq注册后完善信息 都由该index引导, 这些操作的页面都是 popup 就是弹起来的页面进行操作的
+export default { // 启动app 经过splash页 广告页后 如未登录 进入first路径 进入该index.vue 默认action为select-action 显示SelectAction页面
   components: {
     Login, // 登录
     Register, // 注册
@@ -23,7 +23,7 @@ export default { // 进入app后 登录 注册 忘记密码 快捷qq注册后完
     Complete // qq快速注册后的完善信息  选择学校等
   },
   computed: {
-    action () {
+    action () { // 判断到 /first的操作 是什么  默认select-action(选择登录还是注册的界面 现仅剩登录 含splash) 即上面引入的 SelectAction 该页面不是弹起的
       let action = this.$route.query.action
       if (['login', 'register', 'findpw', 'complete'].includes(action)) {
         return action

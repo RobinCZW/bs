@@ -30,7 +30,7 @@ export default {
     }
   },
   computed: {
-    list () { // 已下载的文件列表
+    list () { // 已下载的 文件 列表
       let list = services.download.items.map(i => ({
         name: i.filename,
         size: i.size,
@@ -66,7 +66,7 @@ export default {
       this.$router.go({
         name: 'download.detail',
         params: {
-          md5: item.md5
+          md5: item.md5 // 文件的md5是标识
         }
       })
     }

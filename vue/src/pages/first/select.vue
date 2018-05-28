@@ -10,9 +10,9 @@
 
 <script>
 import services from 'utils/services'
-export default { // 选择登录还是注册的页面  现在注册已经隐藏  仅剩登录选项
+export default { // 选择登录还是注册的页面  现在注册已经隐藏  仅剩登录选项    该页面包含splash页面
   computed: {
-    loginLink () {
+    loginLink () { // 具名router 进入index.vue 里的 login 的Action  显示login控件
       return {
         append: true,
         query: {
@@ -28,7 +28,7 @@ export default { // 选择登录还是注册的页面  现在注册已经隐藏 
         }
       }
     },
-    imgStyle () {
+    imgStyle () { // splash图片网上提顶部栏的高度  空出下面空间给 "登录" 按钮
       return {
         marginTop: -services.config.statusBarHeight + 'px'
       }

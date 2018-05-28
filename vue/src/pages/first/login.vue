@@ -40,7 +40,7 @@ export default { // 登录页面
     // this.$refs.phone
   },
   methods: {
-    goRegister () {
+    goRegister () { // 点击"立即注册"
       this.$router.go({
         append: true,
         query: {
@@ -48,7 +48,7 @@ export default { // 登录页面
         }
       })
     },
-    forgotPW () {
+    forgotPW () { // 点击 忘记密码
       // 总有sb会忘记密码.
       this.$router.go({
         append: true,
@@ -83,7 +83,7 @@ export default { // 登录页面
         })
       })
     },
-    login () {
+    login () { // 手机号登录
       if (this.username.length === 0) {
         services.utils.toast('请输入手机号')
         return

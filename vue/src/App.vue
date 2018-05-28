@@ -55,7 +55,7 @@ export default {
     }
   },
   ready () {
-    this.$router.beforeEach(({from, to, next}) => { // ???? 应该是router的跳转逻辑 像堆栈一样处理页面堆积 下一步和上一步
+    this.$router.beforeEach(({from, to, next}) => {
       // console.log(from, to, next)
 
       let enter = true
@@ -76,9 +76,9 @@ export default {
 
       next()
     })
-    if (services.ad.store.enabled) { // 如果有广告 则展示广告页面
+    if (services.ad.store.enabled) { // 如果有广告 则显示广告页面
       this.showAd = true
-    } else { // 否则直接进入主页面
+    } else { // 无广告则直接进入主页面   注意:此处会有延迟  本地端刚打开默认无广告 于是进入了登录选择页 但此时访问服务器获取到有广告
       this.startup()
     }
   },
@@ -97,9 +97,9 @@ export default {
     }
   },
   methods: {
-    adDone () {
-      this.showAd = false // 广告页面结束了 showAd设为true
-      this.startup() // 调用下面的startup  进入主页面或者进入登录页面
+    adDone () { // 广告页面倒计时结束或点击跳过 出发done给该父组件@done="adDone" 触发该adDone方法
+      this.showAd = false // showAd设为true 隐藏ad-view这个覆盖在表层显示的view
+      this.startup() // 调用下面的startup  进入登录选择页面
     },
     startup () {
       if (services.user.store.isLogin) { // 如果已经登录 进入主页面home
