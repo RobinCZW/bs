@@ -12,7 +12,7 @@ const DIRECTION_DOWN = 1;
  * @returns listView vue component object
  * @constructor
  */
-export default function ListView(itemComponent = {template: ''}) {
+export default function ListView(itemComponent = {template: ''}) { // 课程列表使用的
     /* Force setting itemComponent's prop */
     itemComponent.props = {item: {type: Object}};
     /* Force setting replace to false to use keep-alive (fragment instances are not supported by keep-alive)*/

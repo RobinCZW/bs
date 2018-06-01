@@ -7,7 +7,7 @@
       iframe(v-el:iframe, :src='url', sandbox='allow-same-origin allow-scripts allow-forms', @load='onLoad')
 </template>
 <script>
-export default { // ????
+export default { // 发现页  意见反馈和加入我们用的浏览器页面  传入标题 和 url
   computed: {
     initUrl () {
       const p = this.$route.params

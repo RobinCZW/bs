@@ -4,7 +4,7 @@
 </template>
 
 <script>
-export default { // 学生圈帖子 图片预览
+export default { // 学生圈帖子 小图预览
   name: 'pic-preview',
   props: {
     src: {

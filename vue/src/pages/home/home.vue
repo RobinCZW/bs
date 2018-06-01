@@ -18,7 +18,7 @@ import Community from './community'
 import User from './user'
 import Print from './print'
 
-function iconPair (name) {
+function iconPair (name) { // 更新tab图标
   return [
     require(`assets/icon/tabbar/${name}1.png`), // tab栏已选中图标 2是未选中图标
     require(`assets/icon/tabbar/${name}2.png`)
@@ -44,8 +44,8 @@ export default {
   data () {
     return {
       attaching: false,
-      active: 'course', // 进入主页面停留在哪个tab
-      tabShow: true,
+      active: 'course', // 进入主页面停留在哪个tab   mt-tabbar(:selected.sync= mt-tab-container(:active.sync mint容器内设置哪个就行 相应的active替代component组件 进行某个子组件.vue渲染
+      tabShow: true, // tab栏是否显示  搜索时是隐藏的
       tabs: [{
         id: 'print',
         name: '打印', // tab名
@@ -77,7 +77,7 @@ export default {
     Print
   },
   computed: {
-    contentHeight () {
+    contentHeight () { // 内容高度 有tab栏则减55像素
       return this.parentHeight - (this.tabShow ? 55 : 0)
     }
   },

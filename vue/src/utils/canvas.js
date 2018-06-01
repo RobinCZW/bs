@@ -4,7 +4,7 @@ let height = window.screen.height
 let vmax = width > height ? width : height
 let vmin = width > height ? height : width
 vmin
-function createCanvas (len) { // ????
+function createCanvas (len) {
   let canvas = document.createElement('canvas')
   canvas.width = canvas.height = vmax
   // document.body.appendChild(canvas)

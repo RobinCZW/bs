@@ -5,7 +5,7 @@ import uuid from 'uuid'
 const CountPerPage = 20
 const FormData = window.FormData
 const u2l = {
-  topic (topic) {
+  topic (topic) { // 频道
     return {
       name: topic.name,
       desc: topic.description,
@@ -13,7 +13,7 @@ const u2l = {
       id: topic.id
     }
   },
-  creator (creator, anonymous) {
+  creator (creator, anonymous) { // 发帖人
     const aboy = require('assets/icon/xsq/aboy.png')
     const agirl = require('assets/icon/xsq/agirl.png')
     let item = {
@@ -34,7 +34,7 @@ const u2l = {
     }
     return item
   },
-  feed (feed) {
+  feed (feed) { // 单个feed信息
     let ext = {
       a: 0
     }
@@ -65,7 +65,7 @@ const u2l = {
       title: feed.title
     }
   },
-  comment (comment) {
+  comment (comment) { // 评论信息
     let ext = {
       a: 0
     }
@@ -102,7 +102,7 @@ const u2l = {
       ext: ext
     }
   },
-  mycomment (mycomment) {
+  mycomment (mycomment) { // 我的评论
     let item = u2l.comment(mycomment)
     let feed = u2l.feed(mycomment.feed)
     item.replyTo = {
@@ -137,7 +137,7 @@ export default function (http, $http) {
   http.interceptors.push((request, next) => {
     if (request.url.startsWith(urlRoot)) {
       if (xsq.accessToken !== null) {
-        request.headers.set('accesstoken', xsq.accessToken)
+        request.headers.set('accesstoken', xsq.accessToken) // 带token头访问友盟接口
       }
       request.emulateJSON = true
       request.params['ak'] = appKey
@@ -191,7 +191,7 @@ export default function (http, $http) {
       this.user = user
       return this.login()
     },
-    store: {
+    store: { // 本地存储: 频道列表  feed列表  评论列表
       // topic: {},
       topicList: [],
       feedList: [],
@@ -235,7 +235,7 @@ export default function (http, $http) {
           })
         })
     },
-    listTopic (next) {
+    listTopic (next) { // 获取频道列表
       return $http.get(`${urlRoot}/v2/topics/`, {
         params: next || {
           count: CountPerPage,
@@ -252,7 +252,7 @@ export default function (http, $http) {
         return r
       })
     },
-    listFeed (tid, next) {
+    listFeed (tid, next) { // 根据频道列表id 获取feed列表
       return $http.get(`${urlRoot}/v2/topic/feeds`, {
         params: next || {
           topic_id: tid,
@@ -269,7 +269,7 @@ export default function (http, $http) {
         return r
       })
     },
-    listMyFeed (next) {
+    listMyFeed (next) { // 我发出的帖子列表
       return $http.get(`${urlRoot}/v2/user/timeline`, {
         params: next || {
           count: CountPerPage,
@@ -285,7 +285,7 @@ export default function (http, $http) {
         return r
       })
     },
-    listMyFav (next) {
+    listMyFav (next) { // 我的收藏的列表
       return $http.get(`${urlRoot}/v2/user/favourites`, {
         params: next || {
           count: CountPerPage,
@@ -301,7 +301,7 @@ export default function (http, $http) {
         return r
       })
     },
-    listComment (feedId, next) {
+    listComment (feedId, next) { // 根据feedid获取评论的列表
       return $http.get(`${urlRoot}/v2/feed/comments`, {
         params: next || {
           feed_id: feedId,
@@ -319,7 +319,7 @@ export default function (http, $http) {
         return r
       })
     },
-    listRecvComment (store, next, mapper = i => i) {
+    listRecvComment (store, next, mapper = i => i) { // 我收到的评论的列表
       return $http.get(`${urlRoot}/v2/user/comments/received`, {
         params: next || {
           count: CountPerPage,
@@ -335,7 +335,7 @@ export default function (http, $http) {
         return r
       })
     },
-    listSentComment (store, next, mapper = i => i) {
+    listSentComment (store, next, mapper = i => i) { // 我发出的评论的列表
       return $http.get(`${urlRoot}/v2/user/comments/sent`, {
         params: next || {
           count: CountPerPage,
@@ -351,7 +351,7 @@ export default function (http, $http) {
         return r
       })
     },
-    listLikeme (store, next, mapper = i => i) {
+    listLikeme (store, next, mapper = i => i) { // 赞我的列表
       return $http.get(`${urlRoot}/v2/user/likes/received`, {
         params: next || {
           count: CountPerPage,
@@ -367,23 +367,23 @@ export default function (http, $http) {
         return r
       })
     },
-    likeFeed (feedId) {
+    likeFeed (feedId) { // 赞feed
       return $http.post(`${urlRoot}/v2/feed/like`, {feed_id: feedId})
     },
-    unlikeFeed (feedId) {
+    unlikeFeed (feedId) { // 取消赞
       return $http.delete(`${urlRoot}/v2/feed/like`, {
         body: {feed_id: feedId}
       })
     },
-    favFeed (feedId) {
+    favFeed (feedId) { // 收藏feed
       return $http.post(`${urlRoot}/v2/feed/favourite`, {feed_id: feedId})
     },
-    unfavFeed (feedId) {
+    unfavFeed (feedId) { // 取消收藏feed
       return $http.delete(`${urlRoot}/v2/feed/favourite`, {
         body: {feed_id: feedId}
       })
     },
-    sendFeed (tid, content, anonymous = false, imageUrls = []) {
+    sendFeed (tid, content, anonymous = false, imageUrls = []) { // 发布feed
       return $http.post(`${urlRoot}/v2/feed/`, {
         content: content,
         custom: JSON.stringify({
@@ -394,7 +394,7 @@ export default function (http, $http) {
         type: 0 // 0普通 1公告
       })
     },
-    deleteFeed (feedId) {
+    deleteFeed (feedId) { // 删除feed
       return $http.delete(`${urlRoot}/v2/feed/`, {
         body: {feed_id: feedId}
       }).then(r => {
@@ -407,7 +407,7 @@ export default function (http, $http) {
         }
       })
     },
-    sendComment (content, feed, anonymous = false, replyComment = null) {
+    sendComment (content, feed, anonymous = false, replyComment = null) { // 发表评论
       const feedId = feed.id
       let replyUid = feed.creator.id
       let replyCommentId = null
@@ -425,7 +425,7 @@ export default function (http, $http) {
         reply_comment_id: replyCommentId
       })
     },
-    deleteComment (feedId, commentId) {
+    deleteComment (feedId, commentId) { // 删除评论
       return $http.delete(`${urlRoot}/v2/feed/comment`, {
         body: {
           feed_id: feedId,
@@ -445,7 +445,7 @@ export default function (http, $http) {
       // r.token = 'UPLOAD_AK_TOP XXXXXX...'
       return $http.get(`${urlRoot}/v2/user/upload_image`)
     },
-    uploadImages (images) {
+    uploadImages (images) { // 上传头像时 上传图片
       if (images.length === 0) return
       let token = null
       return xsq.uploadToken()
@@ -473,7 +473,7 @@ export default function (http, $http) {
           return Promise.all(all)
         })
     },
-    uploadAvatar (avatar) {
+    uploadAvatar (avatar) { // 上传头像
       return xsq.uploadImages([avatar])
         .then(r => $http.put(`${urlRoot}/v2/user/icon`, {
           icon_url_str: r[0]

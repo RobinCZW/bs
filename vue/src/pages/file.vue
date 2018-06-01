@@ -40,7 +40,7 @@ export default {
             path: this.cutPath + item.name + '/'
           }
         })
-      } else { // 如果是文件 则显示文件详情页
+      } else { // 如果是文件 则显示文件详情页  file-detail.vue
         this.curFile = item
         this.$router.go({
           name: 'file',
@@ -56,7 +56,7 @@ export default {
         return Promise.resolve() // impossible
       }
       this.loading = true
-      return services.dbfs.list(this.schoolId, this.curPath, 1)
+      return services.dbfs.list(this.schoolId, this.curPath, 1) // 根据路径(含学校id) 获取当前路径下的文件列表
         .then((ret) => {
           this.files = ret.files
           this.folders = ret.folders
@@ -103,7 +103,7 @@ export default {
     schoolId () {
       return this.$route.params.school
     },
-    uniList () {
+    uniList () { // 这个i对象数组   前面是folder数组 后面是file数组  过滤后拼起来了
       let list = this.folders.map(i => {
         i.isFolder = true
         return i

@@ -11,11 +11,11 @@
 </template>
 
 <script>
-import services from 'utils/services' // 已下载 页面
+import services from 'utils/services'
 import { getTypeUrl, displaySize } from 'utils/file'
 services
 
-export default {
+export default { // 已下载 页面
   filters: {
     typeUrl (val) {
       return getTypeUrl(val)
@@ -30,7 +30,7 @@ export default {
     }
   },
   computed: {
-    list () { // 已下载的 文件 列表
+    list () { // 已下载的 文件 列表      读取出来成为一个 对象数组 里面存文件名 大小 路径 md5值 最后操作时间 task
       let list = services.download.items.map(i => ({
         name: i.filename,
         size: i.size,
@@ -66,7 +66,7 @@ export default {
       this.$router.go({
         name: 'download.detail',
         params: {
-          md5: item.md5 // 文件的md5是标识
+          md5: item.md5 // 本地文件访问的key是文件的md5
         }
       })
     }

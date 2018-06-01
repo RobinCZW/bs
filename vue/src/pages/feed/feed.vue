@@ -2,16 +2,19 @@
 .feed-page
   .fix_pos(v-show='status == "list"', transition='hold')
     .submit-btn(v-if='submitVisible', v-on-hold='onHold', v-link='submitLink')
+    // 发布新贴的按钮
     page-scroll(:title='title', :loading='$loadingRouteData', :watch-data='watchData', :top-method='refreshData', :bottom-method='loadmore')
       back-btn(slot='left')
       .feed-container(v-show='!$loadingRouteData')
         feed-item(v-for='item in feedList', :data='item', @detail='detailView(item)', @comment='goComment(item)')
           div(slot='right')
             menu-btn(@click.stop='', :actions='getAction(item)')
+            // menu-btn插入feed-item里的右slot里
   .fix_pos(v-show='status == "submit"', transition='rotate', @transitionend='focusText')
     new-feed(v-ref:new-feed, :tid='tid', @send='refreshData')
   .fix_pos(v-if='status == "detail"', transition='right', @transitionend='focusComment')
     feed-detail(v-ref:detail, :feed='detail.feed')
+    // 三个fix_pos是三个视图 根据status决定加载哪个   feed-detail是进入详情的页面是浮动出来的  new-feed新帖子编辑的页面  list则是最正常的这个feed流页面
 </template>
 
 <script>
@@ -22,9 +25,9 @@ import services from 'utils/services'
 const submitNormal = require('assets/icon/xsq/submit2.png')
 const submitPress = require('assets/icon/xsq/submit1.png')
 
-export default { // 一个频道里的整个feed流
+export default { // 一个频道里的 整个feed流
   watch: {
-    status (val) {
+    status (val) { // 点击新建新帖子进入编辑页面时  清空本来编辑页的内容
       if (val === 'submit') {
         this.$refs.newFeed.clear()
       }
@@ -39,7 +42,7 @@ export default { // 一个频道里的整个feed流
     return {
       next: null,
       source: (tid, next) => { // tid 是一个标记
-        if (tid === 'my') { // 我自己发布的帖子
+        if (tid === 'my') { // 我自己发布的帖子  tie从友盟拉取流的时候 已经区别出是否自己发的帖子了
           return services.xsq.listMyFeed(next)
         } else if (tid === 'myfav') { // 我喜欢的帖子(点赞过的)
           return services.xsq.listMyFav(next)
@@ -62,7 +65,7 @@ export default { // 一个频道里的整个feed流
     tid () {
       return this.$route.params.tid
     },
-    feedList () {
+    feedList () { // feed流里的所有feed
       return services.xsq.store.feedList
     },
     status () {
@@ -71,7 +74,7 @@ export default { // 一个频道里的整个feed流
       }
       return 'list'
     },
-    submitLink () {
+    submitLink () { // 编辑新帖
       return {
         name: 'feed',
         params: this.$route.params,
@@ -149,7 +152,7 @@ export default { // 一个频道里的整个feed流
         }
       })
     },
-    focusComment () { // ???? 默认触发点击评论框,弹出键盘
+    focusComment () { // 进入详情页时默认触发focus评论框,弹出键盘
       if (this.$route.query.cmt) {
         this.$refs.detail.focusComment()
       }
@@ -169,7 +172,7 @@ export default { // 一个频道里的整个feed流
       //   name: 'feed.detail'
       // })
     },
-    focusText (e) { // ???? 进入编辑心贴子的页面  并自动focus文本框
+    focusText (e) { // 进入编辑新贴子的页面时自动focus文本框
       if (this.status === 'submit') {
         this.$refs.newFeed.focusText()
       }
@@ -205,7 +208,7 @@ export default { // 一个频道里的整个feed流
     width: 100%;
     height: 100%;
   }
-  .submit-btn {
+  .submit-btn { // 发起新贴的按钮
     position: fixed;
     right: 20px;
     bottom: 20px;
@@ -214,7 +217,7 @@ export default { // 一个频道里的整个feed流
     background-image: url("~assets/icon/xsq/submit1.png");
     background-size: 60px;
     background-repeat: no-repeat;
-    z-index: 999;
+    z-index: 999; // 叠加在所有视图上面
   }
   .feed-container {
     padding-bottom: 30px;

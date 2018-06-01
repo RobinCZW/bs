@@ -12,7 +12,7 @@
 // import Popup from 'vux-components/popup'
 import SchoolPicker from 'components/school-picker'
 var btnImg = require('assets/button/choose_school_white.png')
-export default {
+export default { // 切换学校的控件
   name: 'dropdown',
   components: {
     SchoolPicker

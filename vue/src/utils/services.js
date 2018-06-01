@@ -2,7 +2,7 @@ import manifest from '../manifest'
 import Vue from 'vue'
 import VueResource from 'vue-resource'
 import xsq from './xsq'
-import DownloadManager from 'utils/download'
+import DownloadManager from 'utils/download' // 下载操作的函数在 download.js里 这里直接引用
 import { Toast, MessageBox } from 'mint-ui'
 import {alipay} from './pay'
 
@@ -104,7 +104,7 @@ var services = new Vue({
         .then(r => {
           console.log(r)
           sessionId = r.sessionId
-          localStorage.setItem('sessionId', sessionId)
+          localStorage.setItem('sessionId', sessionId) // session存在本地了
         })
     },
     initModules () {
@@ -192,7 +192,7 @@ var services = new Vue({
     }, 1000)
   },
   watch: {
-    store: {
+    store: { // store发生变化的时候,序列化成字符串存入json
       handler () {
         localStorage.setItem('store', JSON.stringify(this.store))
       },
@@ -210,7 +210,7 @@ var services = new Vue({
       disableRipple: true,
       statusBarHeight: 0
     },
-    store: { // 不使用子对象
+    store: { // 不使用子对象   store里面存   用户名 密码 user{} 收藏课程list[] 打印个人宿舍信息 
       username: '',
       password: '',
       user: {},
@@ -221,7 +221,7 @@ var services = new Vue({
         phone: ''
       }
     },
-    global: { // TODO: ugly
+    global: { // TODO: ugly         全局变量  当前feed
       curFeed: {}
     },
     xsq: {},
@@ -275,7 +275,7 @@ var services = new Vue({
       addFolder(school, path) {  // 添加文件夹(新课程)
         return this.$http.post(apiRoot+`/dbfs/${school}/newFolder`, {path: path})
       },
-      link (school, path, hash) { // ???? 在hashExist为true时使用(服务器有该文件), 将path处的文件内容设置为md5为hash的文件.
+      link (school, path, hash) { // 在hashExist为true时使用(服务器有该文件), 将path处的文件内容设置为md5为hash的文件.
         return this.$http.post(apiRoot+`/dbfs/${school}/link`, {path: path, hash: hash})
       },
       upload (school, data, pcb) { // 上传文件并放到path指定的位置. 发送类型为multipart
@@ -338,7 +338,7 @@ var services = new Vue({
           return r
         })
       },
-      login (un, pw) { // 账号密码登录
+      login (un, pw) { // 账号密码登录   同时将用户信息写入 store 存储在本地
         return this.$http.post(https(apiRoot+'/user/login'), {un: un, pw: pw})
           .then((r) => {
             r.data.avatar = `${urlRoot}/${r.data.avatar}`
@@ -373,7 +373,7 @@ var services = new Vue({
       checkCode (code) { // 验证用户输入的验证码是否正确
         return this.$http.post(apiRoot+'/user/verifycode', {code: code})
       },
-      register (data) { // 提交信息data给服务器端 进行注册      会进行短信验证码验证 现在返回  验证码错误
+      register (data) { // 提交信息用户注册时填写的信息data给服务器端  进行注册     ????进行调整:会进行短信验证码验证 现在返回  验证码错误
         return this.$http.post(https(apiRoot+'/user/register'), data)
       },
       uploadAvatar (avatar) { // 上传头像
@@ -400,7 +400,7 @@ var services = new Vue({
                 })
                 .catch(() => null)
             }
-            if (r.pic) { // ???? 如果有广告图片 则把广告图的url存起来(加上头)
+            if (r.pic) { // 如果有广告图片 则把广告图的url存起来(加上头)
               if (!/^https?:\/\//.test(r.pic)) {
                 r.pic = `${urlRoot}/${r.pic}`
               }
@@ -425,7 +425,7 @@ var services = new Vue({
             this.school.store.schoolList = r
           }))
       },
-      listCourse (college) { // 获取课程列表
+      listCourse (college) { // 获取课程列表  废弃  直接通过学校id获取文件路径下的文件列表了
         return this.$http.post(apiRoot+'/school/listCourse', {college: college})
       },
       listAcademy (college) { // 获取学院列表
@@ -433,7 +433,7 @@ var services = new Vue({
       }
     },
     good: { // 商品列表
-      store: {
+      store: { // 每个store不同  用户信息的是 localstore.user.store       商品的是localstore.good.store
         list: []
       },
       list () {
@@ -442,25 +442,25 @@ var services = new Vue({
             this.good.store.list = r
           }))
       },
-      list2 () {
+      list2 () { // list2和上门list区别是  list2的response带商品list以及 营业状态closed
         return this.$http.post(apiRoot+'/good/list2')
           .then(putData(r => {
             this.good.store.list = r.list
           }))
       }
     },
-    order: { // 订单
-      add (data) {
+    order: { // 订单相关
+      add (data) { // 下单 后台增加一个订单信息   data里是  addr地址   name姓名  phone电话  list二维数组[[1,2],[3,4]]表示商品ID为1的是2份,商品ID为3的是4份
         return this.$http.post(apiRoot+'/order/add', data)
       },
-      pay (uuid, type = 'alipay') {
+      pay (uuid, type = 'alipay') { // 默认只有alipay
         let response
         return this.$http.post(apiRoot+'/order/pay', {uuid, type})
           .then(r => {
             // r: {body: { type: alipay, payinfo: "1234" }}
             response = r
             const body = r.body
-            switch (body.type) { // 服务器端返回成功添加订单后才调用alipay接口
+            switch (body.type) { // 服务器端返回成功添加订单后才调用alipay接口(pay.js)
               case 'alipay':
                 return alipay(body.payinfo)
             }
@@ -473,7 +473,7 @@ var services = new Vue({
             services.utils.toast(e)
           })
       },
-      list (page = 1) { // 获取订单列表
+      list (page = 1) { // 获取订单列表 后台根据用户session  自动返回该用户的订单列表
         return this.$http.post(apiRoot+'/order/list', { page })
       }
     }
@@ -502,7 +502,7 @@ function putData(fn) {
 //   }
 // }
 
-function apiRC(r) { // ????
+function apiRC(r) {
   if (r.status === 0) {
     return r.data
   } else {
@@ -516,7 +516,7 @@ function apiRC(r) { // ????
 
 export default services;
 
-function ajaxFile(url, data, pcb) { // ????
+function ajaxFile(url, data, pcb) {
   pcb = pcb || (() => 0);
   var formData = new FormData();
   Object.keys(data).forEach((key) => formData.append(key, data[key]));

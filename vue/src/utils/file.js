@@ -28,7 +28,7 @@ function getTypeUrl (filename) { // 返回文件类型的图片(的路径)  例�
     return unknownIcon
   }
 }
-function displaySize (size) {
+function displaySize (size) { // 显示的文件大小
   if (!size) return ''
   if (size < 1024 * 1024) { // 1M
     return Math.ceil(size / 1024) + ' KB'

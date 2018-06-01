@@ -34,7 +34,7 @@ export default { // 整个注册流程的主体 action为register的都进入这
     Step3
   },
   methods: {
-    regInfo () {
+    regInfo () { // 注册时 用户填写的信息 直接传入services.user.register(data)  提交至服务器
       return {
         phone: this.phone,
         password: this.password,
@@ -67,18 +67,18 @@ export default { // 整个注册流程的主体 action为register的都进入这
         Object.keys(moreData).forEach(i => data.schoolMore[i] = moreData[i])
       }
       let blob = dataURLtoBlob(this.$refs.step2.previewData)
-      services.user.register(data)
+      services.user.register(data) // 提交用户填写的注册信息
         .then(() => {
-          return services.user.uploadAvatar(blob)
+          return services.user.uploadAvatar(blob) // 上传头像
         })
         .then(() => {
-          return services.user.login(data.phone, data.password)
+          return services.user.login(data.phone, data.password) // 顺便登录
         })
         .then(() => {
-          return services.xsq.updateInfo()
+          return services.xsq.updateInfo() // 信息往友盟传一次
         })
         .then(() => {
-          return services.xsq.uploadAvatar(blob)
+          return services.xsq.uploadAvatar(blob) // 头像往友盟传一次
         })
         .then(() => {
           this.loading = false

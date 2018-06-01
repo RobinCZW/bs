@@ -1,9 +1,9 @@
 import Vue from 'vue'
-const FileTransfer = window.FileTransfer
+const FileTransfer = window.FileTransfer // Cordova插件  用于文件下载
 const localStorage = window.localStorage
 const LSKey = 'downloadManager'
 const now = () => new Date().getTime()
-function W (func, context = null) { // ????
+function W (func, context = null) {
   return function (...args) {
     return new Promise((resolve, reject) => {
       args.push(resolve)
@@ -18,14 +18,14 @@ function W (func, context = null) { // ????
 }
 const resolveLocalFileSystemURLAsync = W(window.resolveLocalFileSystemURL)
 
-function getStorageDir () { // Cordova用的路径
+function getStorageDir () { // Cordova用的路径  返回返回期末考啦创建的文件保存路径
   return resolveLocalFileSystemURLAsync('cdvfile://localhost/sdcard/')
     .then(dir => {
       const getDirectory = W(dir.getDirectory, dir)
       return getDirectory('期末考啦', {create: true})
     })
 }
-class Sson {
+class Sson { // 让本地文件对象可以序列化成json格式数据 或 从json数据序列化成对象
   constructor () {
     this._fields = []
   }
@@ -46,7 +46,7 @@ class Sson {
     return obj
   }
 }
-class FileItem extends Sson {
+class FileItem extends Sson { // 文件对象 要存本地端的
   constructor () {
     super()
     this.filename = '' // 文件名
@@ -56,8 +56,8 @@ class FileItem extends Sson {
     this.size = 0 // 大小
     this.downTime = 0 // 下载时间
     this.nativeURL = '' // 本地路径
-    this.failReason = '' // ????失败理由
-    this.transfer = null // ????
+    this.failReason = ''
+    this.transfer = null
     this.progress = { // 下载进度
       loaded: 0,
       total: 0
@@ -80,10 +80,10 @@ class FileItem extends Sson {
     return super.fromJSON(FileItem, val)
   }
 }
-const DownloadManager = Vue.extend({
+const DownloadManager = Vue.extend({ // DownLoadManager 定义
   name: 'download-manager',
   methods: {
-    init () {
+    init () { // DownloadManager初始化就获取了本地的存储路径 dir
       if (!window.cordova) return
       return getStorageDir()
         .then(dir => {
@@ -92,7 +92,7 @@ const DownloadManager = Vue.extend({
           this.dir = dir
         })
     },
-    deleteByMd5 (md5) { // 通过md5删除文件
+    deleteByMd5 (md5) { // 通过md5删除文件   也集成在DownloadManager里
       let chain = Promise.resolve()
       let task = this.byMd5[md5]
       if (task.transfer) {
@@ -119,8 +119,8 @@ const DownloadManager = Vue.extend({
       })
       return chain
     },
-    downloadFile (file, path, url) { // 下载文件   url是oss真实下载地址
-      /*
+    downloadFile (file, path, url) { // 下载文件    file是文件对象  path是服务器上的绝对文件路径 学校/课程/文件夹/文件名  url是oss真实下载地址
+      /* file是文件对象 含以下信息
         size: "123", //单位: Byte
         name: "abc.txt",
         ctime: 1472185422506, //创建时间
@@ -131,7 +131,7 @@ const DownloadManager = Vue.extend({
 
       // window.open(url) 浏览器直接弹出下载
 
-      let task = new FileItem()
+      let task = new FileItem() // 1.服务器端获取下来的文件信息 赋值给本地端文件对象task
       task.filename = file.name
       task.path = path
       task.md5 = file.md5
@@ -141,13 +141,13 @@ const DownloadManager = Vue.extend({
         loaded: 0,
         total: 1
       }
-      this.items.push(task)
+      this.items.push(task) // 2.要下载的文件先存入items   items是被watch的有更改就会调用 save()
       let transfer = new FileTransfer()
       transfer.onprogress = progressEvent => {
         task.progress.loaded = progressEvent.loaded
         task.progress.total = progressEvent.total
       }
-      this.getDest(file).then(fileurl => { // getDest是下面实现的重名处理
+      this.getDest(file).then(fileurl => { // 3.根据本地目录下载文件
         console.log('fileurl: ', fileurl)
         transfer.download( // 开始下载
           url,
@@ -164,7 +164,7 @@ const DownloadManager = Vue.extend({
         task.transfer = transfer
       })
     },
-    getDest (file) { // ????
+    getDest (file) { // 返回本地路径+文件名        这个组合url可以访问到本地文件了
       // TODO 重名处理
       let i = 0
       let filenameGen = () => {
@@ -192,13 +192,13 @@ const DownloadManager = Vue.extend({
       return next()
       // return `${this.dir.nativeURL}/${file.name}`
     },
-    save () { // ???? 存储文件信息吧  什么样的映射关系? 新增一个文件就重新存储一次  不需要建数据库表格
+    save () { // items发生变化(也就是有新的要下载的文件加入items时),执行save 把items信息序列化成json文件存储. 之后每次DownloadManager初始化都先从json读取items,再将新文件加入items,再写入json
       let json = {
-        items: this.items.map(i => i.toJSON())
+        items: this.items.map(i => i.toJSON()) // 已下载的文件对象集合items 每个文件对象都格式化成 JSON格式数据(此时还是对象)  存在 json文件里  key值是item 成 item[{},{},{},...]
       }
-      localStorage.setItem(LSKey, JSON.stringify(json))
+      localStorage.setItem(LSKey, JSON.stringify(json)) // 直接调用本地存储设置一个键值对 key是downloadManager  把存有已下载文件信息的 json数据 序列化成JSON字符串存储
     },
-    load () { // 从本地存储中读取 文件信息
+    load () { // 从本地存储中读取 文件信息  每次DownloadManager初始化的时候最先执行了load 把本地json存的items(已下载文件)都序列化出来存在items了,初始化完毕后DownloadManager又将新要下载的文件加入items再写入json
       // read from local storage
       let json = localStorage.getItem(LSKey)
       try {
@@ -213,7 +213,7 @@ const DownloadManager = Vue.extend({
     }
   },
   computed: {
-    byMd5 () {
+    byMd5 () { // items发生变化时  遍历items里每个file对象 新建一个map:   md5值:file对象   byMd5这个计算属性永远返回这个map 可通过md5值key访问到file对象
       let map = {}
       for (let file of this.items) {
         map[file.md5] = file
@@ -223,7 +223,7 @@ const DownloadManager = Vue.extend({
   },
   data () {
     return {
-      items: [] // ???? 下载的每个文件的信息
+      items: [] // 下载的每个文件的信息 集合
     }
   },
   created () {

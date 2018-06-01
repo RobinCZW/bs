@@ -26,7 +26,7 @@ export default {
     XInput,
     XButton
   },
-  computed: {
+  computed: { // 计算属性
     codeHint () { // 发送验证码 点击后 会变成 重新发送 字样 并倒计时一分钟
       if (this.codeCooldown <= 0) {
         return '发送验证码'
@@ -34,7 +34,7 @@ export default {
         return `重新发送 (${this.codeCooldown})`
       }
     },
-    codeStyle () { // 倒计时时 字体变灰色 不可操作
+    codeStyle () { // 倒计时时 字体变灰色
       return {
         color: this.codeCooldown <= 0 ? '#000' : '#D9D9D9'
       }
@@ -52,7 +52,7 @@ export default {
   },
   methods: {
     sendCode () { // 发送验证码
-      if (this.codeCooldown <= 0) {
+      if (this.codeCooldown <= 0) { // 倒计时已<=0 可发送短信 执行发送短信操作
         this.codeCooldown = 60
         let id = setInterval(() => {
           this.codeCooldown--
@@ -74,28 +74,31 @@ export default {
           phone: this.phone,
           password: this.password
         })
-        this.$router.go({
+        this.$router.go({ // 跳转到第二步
           query: {
             step: 2,
             action: 'register' // action参数为register而已 不是跳到register.vue
           }
         })
       }
-      if (this.sentPhone !== this.phone) { // 没点发送验证码
-        services.utils.toast('请发送验证码')
-        return
-      }
+      // if (this.sentPhone !== this.phone) { // 没点发送验证码提示
+      //   services.utils.toast('请发送验证码')
+      //   return
+      // }
+
       if (this.password.length < 6) { // 密码不足6位
         services.utils.toast('密码长度不足6位')
         return
       }
-      // if (this.codeOk) { // 如果验证码正确则go   否则就继续下面去验证 该语句是测试语句! 正经验证在下面!
-      //   go()
-      //   return
-      // }
+
+      if (this.codeOk) {
+        go()
+        return
+      }
+
       // return services.user.checkCode(this.code) // 验证验证码是否正确
       //   .then((r) => {
-      //     this.codeOk = r.ok // r.ok 是服务器返回的 验证码正确与否 的 变量
+      //     this.codeOk = r.ok
       //     if (r.ok) {
       //       go()
       //     } else {
@@ -103,7 +106,7 @@ export default {
       //     }
       //   })
 
-      go() // 不进行验证码验证  直接进入下一步
+      go() // 不进行验证码验证  直接进入下一步完善信息  最后(index.vue register(data))
       return
     }
   },

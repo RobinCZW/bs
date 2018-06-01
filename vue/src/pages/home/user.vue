@@ -83,7 +83,7 @@ export default { // 发现页面 也就是用户信息页面
         name: 'user.order'
       }
     },
-    myfeedLink () {
+    myfeedLink () { // ????
       return {
         name: 'feed',
         params: {
@@ -92,7 +92,7 @@ export default { // 发现页面 也就是用户信息页面
         }
       }
     },
-    myfavLink () {
+    myfavLink () { // ????
       return {
         name: 'feed',
         params: {

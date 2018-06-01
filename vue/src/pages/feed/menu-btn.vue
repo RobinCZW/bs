@@ -13,7 +13,7 @@ export default { // 学生圈每个帖子右上角的操作按钮
   },
   data () {
     return {
-      visible: false, // visible为true时, 底部弹出操作的选项  复制或删除 这两个操作是通过props的参数action传下来的  定义见 feed 或 deed-detail
+      visible: false, // visible为true时, 底部弹出操作的选项  复制或删除 这两个操作是通过props的参数action传下来的  定义见 feed的getAction
       visibleAfter: false
     }
   },

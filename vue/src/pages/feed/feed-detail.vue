@@ -4,6 +4,7 @@
     back-btn(slot='left')
     .container
       .input-mask(v-show='inputing', @click='closeInput')
+      // 详情页里 上半部就是一个 feed-item 只是操作bar变成了只有赞和收藏
       feed-item(:data='feed', :bar='false')
       .no-comment(v-if='!loading && comments.length === 0')
         img(src='~assets/icon/xsq/no_comment.png')
@@ -25,11 +26,11 @@
 // const iconCellOp = require('assets/icon/xsq/cell_operate.png')
 import MenuBtn from './menu-btn'
 import CommentBtn from './comment-btn'
-import Group from 'vux-components/group' // 常见的表单组件都必须作为Group的子组件。 属于Group子组件的有：Cell, XInput, XTextarea, XSwitch, Calendar, XNumber, Radio, XAddress, Datetime, Selector
+import Group from 'vux-components/group'
 import services from 'utils/services'
-export default {
+export default { // feed详情页
   components: {
-    Group,
+    Group, // 常见的表单组件都必须作为Group的子组件。 属于Group子组件的有：Cell, XInput, XTextarea, XSwitch, Calendar, XNumber, Radio, XAddress, Datetime, Selector
     MenuBtn,
     CommentBtn
   },
@@ -60,7 +61,7 @@ export default {
       // if (this.loading) return []
       return services.xsq.store.commentList
     },
-    footerHeight () { // ???? 键盘高度?   输入状态时增加35
+    footerHeight () {
       return this.inputHeight + (this.inputing ? 35 : 0)
     },
     placeholder () { // hint的提示字符串 分回复别人 和 单纯自己发评论

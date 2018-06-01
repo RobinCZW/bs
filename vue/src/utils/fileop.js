@@ -25,17 +25,17 @@ function checkPlugin () {
 }
 export function sendToMyCompouter (text, url) { // 发送到电脑
   if (!checkPlugin()) return
-  let surl = genURL('期末考啦', text, url) // genURL定义在上面 surl已经带了qq的api的链接
+  let surl = genURL('期末考啦', text, url) // genURL定义在上面 surl已经带了qq的api的链接 这里传入本app名 文本 文本链接
   console.log('openurl: ', surl)
   return plugins.webintent.startActivity({
     action: plugins.webintent.ACTION_VIEW,
-    url: surl
+    url: surl // 这个url决定唤起什么   唤起qq分享的界面
   }, r => null, e => {
     throw new Error('启动QQ失败')
   })
 }
 export function openWithUrl (url) { // 调用本地能打开此文件的app打开 (用户可选择wps)
-  let type = getMIMEByName(decodeURIComponent(url))
+  let type = getMIMEByName(decodeURIComponent(url)) // 是根据mime对照表查 一种文件 由哪种软件 打开的   系统会弹出选择框 列出所有能打开的app
   // console.log(url, decodeURIComponent(url), type)
   plugins.webintent.startActivity({
     action: plugins.webintent.ACTION_VIEW,

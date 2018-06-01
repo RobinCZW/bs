@@ -27,7 +27,7 @@ import Loading from 'vux-components/loading'
 import PageBase from './page-base'
 // import services from 'utils/services'
 
-export default {
+export default { // 能滑动的列表页   有 标题  左右两块插槽 可loading   可以loadmore  有footer插槽
   name: 'page-scroll',
   methods: {
     getScrollPosition () {

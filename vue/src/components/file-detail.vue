@@ -23,6 +23,7 @@
       .footer(v-if='!downloading')
         button.blue(v-if='canOpen', @click="onOpen") 打开文件
         button.blue(v-if='!canOpen', @click="$emit('download')") 下载到手机
+        // 下载的操作向父组件提交 download 其实现在父组件file.vue里
         button.white(@click="onSendPC") 发送到电脑
 </template>
 <script>
@@ -34,7 +35,7 @@ import services from 'utils/services'
 import { getTypeUrl, displaySize } from 'utils/file'
 import { sendToMyCompouter, openWithUrl } from 'utils/fileop'
 // window.sendToMyCompouter = sendToMyCompouter
-export default {
+export default { // 课程列表内的 文件详情pop页             已下载页 也用到了该子组件
   name: 'file-detail',
   filters: {
     dateFormat (t) {
@@ -55,9 +56,9 @@ export default {
     }
   },
   methods: {
-    onOpen () {
+    onOpen () { // 打开文件
       try {
-        openWithUrl(this.task.nativeURL)
+        openWithUrl(this.task.nativeURL) // 直接通过nativeURL打开本地文件, 另外调用父组件open更新lastOptionTime
         this.$emit('open')
       } catch (e) {
         services.utils.toast(e.message)

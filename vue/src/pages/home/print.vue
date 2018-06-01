@@ -24,10 +24,10 @@ export default {
     XButton
   },
   computed: {
-    items () {
+    items () { // 商品列表items
       return services.good.store.list
     },
-    buyClass () {
+    buyClass () { // 是否营业
       return {'buy-disable': this.closed}
     }
   },
@@ -59,10 +59,10 @@ export default {
     },
     buy (item) {
       if (this.closed) return
-      this.$router.go({
+      this.$router.go({ // 进入订单信息完善页
         name: 'order.form',
         params: {
-          list: JSON.stringify([[item.id, 1]])
+          list: JSON.stringify([[item.id, 1]]) // 1是数量 安卓端默认1
         }
       })
     },

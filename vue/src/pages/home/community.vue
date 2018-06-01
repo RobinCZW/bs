@@ -20,7 +20,7 @@ services // window.MultiImagePicker.getPictures(null,null,{maxNum:9,style:{theme
 // const test = require('assets/test.png')
 let imgs = ['0.png', '1.png', '2.png', '3.jpg', '4.png', '5.png'].map(i => require(`assets/comm/${i}`)) // 轮播图的图片
 
-export default {
+export default { // 学生圈页面
   components: {
     Swiper,
     Group
@@ -32,7 +32,7 @@ export default {
     enter (item) {
       console.log('enter', item)
     },
-    feedLink (item) { // 点击item后 跳转到 feed.vue 页面 并且参数是 频道(item)的id和name
+    feedLink (item) { // 点击item后 跳转到 feed.vue 页面 并且参数是 频道(item)的id和name  (具名路由)
       return {
         name: 'feed',
         params: {
@@ -42,7 +42,7 @@ export default {
       }
     },
     refreshData () {
-      return services.xsq.listTopic()
+      return services.xsq.listTopic() // 频道(话题) 列表
         .then(r => {
           this.next = r.next
           this.initLoading = false
@@ -76,7 +76,7 @@ export default {
       initLoading: true,
       listIndex: 0,
       next: null,
-      list: imgs.map(i => ({
+      list: imgs.map(i => ({ // 轮播图图片list
         img: i
       })),
       windowWidth: window.innerWidth

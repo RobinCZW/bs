@@ -13,9 +13,9 @@ div
 </template>
 
 <script>
-import VueRipple from 'components/vue-ripple' // 已下载页面 的每个item 以及 学生圈每个频道的item      都是一个图标 两行字 复用了
+import VueRipple from 'components/vue-ripple'
 const unknownIcon = require('assets/icon/file/other.png')
-export default {
+export default { // 已下载页面 的每个item 以及 学生圈每个频道的item      都是一个图标 两行字 复用了
   name: 'icon-item',
   components: {
     VueRipple

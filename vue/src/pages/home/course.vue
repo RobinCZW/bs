@@ -135,7 +135,7 @@ export default {
         window.history.back()
       }
     },
-    enter (item) { // ???? 已废弃
+    enter (item) { // 已废弃 现在每个item增加右边收藏 因此需区分点击哪边
       this.$router.go({
         name: 'file',
         params: {

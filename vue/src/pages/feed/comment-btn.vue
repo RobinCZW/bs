@@ -1,6 +1,13 @@
 <template lang="pug">
 .comment-btn
 </template>
+
+<script>
+export default { // 评论按钮
+
+}
+</script>
+
 <style>
 .comment-btn {
   display: inline-block;
@@ -12,8 +19,3 @@
   background-size: 20px;
 }
 </style>
-<script>
-export default { // 评论按钮
-
-}
-</script>

@@ -87,7 +87,7 @@ export default {
       let images = this.images.map(i => i.blob)
       return services.xsq.uploadImages(images)
     },
-    onFile (filelist) { // ???? 选择图片时  图片就是file
+    onFile (filelist) { // 选择图片时  图片就是file   :src='img.src'
       for (let i = 0; i < filelist.length; i++) {
         let file = filelist[i]
         console.log('choose file', file)

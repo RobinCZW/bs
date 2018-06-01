@@ -1,6 +1,7 @@
 <template lang="pug">
 .feed-item(@click='emit("detail")')
   div(v-if='fullscreen')
+    // 预览图片的视图
     .fullscreen(v-transfer-dom)
       .wrap
         touch-picture.full(:src='fullImages[fullIndex]', @click='onCloseView')
@@ -13,17 +14,20 @@
     :creator='data.creator',
     :anonymous='anonymous'
   )
+    // 发帖人信息sender-bar
     slot(slot='right', name='right')
   .content
     .text(v-text='data.content')
     div(v-if='data.imgs.length > 0', :class='picClass')
       pic-preview(:src='img[360]', v-for='img in data.imgs', @click.stop='onView($index)')
+      // 如果有图片 则展示图片的预览小图
   div(:class='actionClass')
     .btn.like(v-on-hold='onHold', :class='likeClass', @click.stop='like')
       .number(v-text='zeroHide(data.likeCount)')
     .btn.fav(v-on-hold='onHold', :class='favClass', @click.stop='fav')
     .btn.comment(v-on-hold='onHold', @click.stop='emit("comment")')
       .number(v-text='zeroHide(data.commentCount)')
+    // comment 评论事件定义在父组件 feed.vue goComment里
 </template>
 
 <script>
@@ -33,7 +37,7 @@ import PicPreview from 'components/pic-preview'
 import TouchPicture from 'components/touch-picture'
 import services from 'utils/services'
 
-export default { // 是详情页里面的 上半部feed内容  不含评论区和键盘区   只是帖子内容和赞和收藏的区域
+export default { // feed流里每个item的样式   同时也是是详情页里面的 上半部feed内容(不含评论区和键盘区,只是帖子内容和赞和收藏的区域)时的子组件
   name: 'feed-item',
   components: {
     PicPreview,
@@ -56,12 +60,12 @@ export default { // 是详情页里面的 上半部feed内容  不含评论区�
     }
   },
   methods: {
-    onCloseView () {
+    onCloseView () { // 关闭大图片显示视图
       console.log('close view')
       // this.fullscreen = false
       window.history.back()
     },
-    onView (index) {
+    onView (index) { // 大图片显示视图
       // this.$emit('view', img)
       console.log('view ', index)
       this.fullIndex = index
@@ -73,7 +77,7 @@ export default { // 是详情页里面的 上半部feed内容  不含评论区�
         query: query
       })
     },
-    onHold (e, start) {
+    onHold (e, start) { // 三个操作按钮被按住时 背景样式需要变化
       // let classes = e.currentTarget.className.split(' ')
       // if (start) {
       //   // pressed
@@ -89,7 +93,7 @@ export default { // 是详情页里面的 上半部feed内容  不含评论区�
         e.currentTarget.removeAttribute('pressed')
       }
     },
-    zeroHide (v) {
+    zeroHide (v) { // 赞 和 评论 如果是0就隐藏数字
       if (v == 0) {
         return ''
       }
@@ -98,7 +102,7 @@ export default { // 是详情页里面的 上半部feed内容  不含评论区�
     emit (eventName) {
       this.$emit(eventName)
     },
-    fav () {
+    fav () { // 收藏
       if (this.doing) return
       this.data.collected = !this.data.collected
       this.doing = true
@@ -114,7 +118,7 @@ export default { // 是详情页里面的 上半部feed内容  不含评论区�
         return services.xsq.favFeed(this.data.id).then(afterDone, onFail)
       }
     },
-    like () {
+    like () { // 赞
       if (this.doing) return
       this.data.liked = !this.data.liked
       this.data.likeCount += this.data.liked ? 1 : -1
@@ -146,7 +150,7 @@ export default { // 是详情页里面的 上半部feed内容  不含评论区�
     },
     actionClass () {
       return {
-        'action-bar': this.bar,
+        'action-bar': this.bar, // bar值 为 true
         'action-group': !this.bar
       }
     },
@@ -229,7 +233,7 @@ export default { // 是详情页里面的 上半部feed内容  不含评论区�
   // box-shadow: 0 0 4px rgba(0,0,0,.1);
   background-color: #fff;
   margin-top: 15px;
-  .action-group {
+  .action-group { // 详情页里的 喜欢/收藏 的这个操作栏
     position: relative;
     height: 90px;
     padding-top: 25px;
@@ -292,7 +296,7 @@ export default { // 是详情页里面的 上半部feed内容  不含评论区�
       display: none;
     }
   }
-  .action-bar {
+  .action-bar { // feed流里 每个feed item的操作栏 喜欢/赞/评论
     border-top: 1px solid #f2f2f2;
     height: 34px;
     .like {

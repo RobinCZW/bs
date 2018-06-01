@@ -7,14 +7,17 @@
     slot(slot='right', name='right')
   .content
     .text(v-text='comment.content')
+    // 回复者的文字内容
     .referrer(v-if='comment.replyTo', @click='onClickRef')
+      // 发帖者块
       .refcontent(v-text='replyContent')
+      // 发帖者的文字内容
 </template>
 
 <script>
 /*eslint eqeqeq: "off"*/
 import SenderBar from 'components/sender-bar'
-export default { // 这是评论区里  每个评论的item  每条评论就是一个item   有单独的评论  也有回复别人的回复,此时加载的样式较复杂
+export default { // 评论区里  每个评论的item  每条评论就是一个item   有单独的评论  也有回复别人的回复,此时加载的样式较复杂
   name: 'comment-item',
   components: {
     SenderBar
@@ -24,7 +27,7 @@ export default { // 这是评论区里  每个评论的item  每条评论就是�
       required: true
     },
     prefix: {
-      default: '回复@'
+      default: '回复@' // prefix和suffix中间放发帖者的昵称
     },
     suffix: {
       default: '的评论: '
