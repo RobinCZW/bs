@@ -15,7 +15,7 @@
 
 <script>
 import Loading from 'vux-components/loading'
-export default { // ????
+export default { // 高性能的华东列表库
   components: {
     Loading
   },

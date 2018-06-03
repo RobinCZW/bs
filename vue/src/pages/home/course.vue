@@ -219,7 +219,7 @@ export default {
       }
       this.$emit('changetab', !val)
     },
-    attaching (val) { // ????
+    attaching (val) {
       let scroll = this.$refs.scroll.$els.scroll
       if (val) {
         console.log('at', scroll)

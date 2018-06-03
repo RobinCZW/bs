@@ -367,13 +367,13 @@ var services = new Vue({
             return r
           })
       },
-      sendCode (phone) { // 请求发送验证码  现在短信接口不可用    服务器返回 做轰炸机的你妈死了
+      sendCode (phone) { // 请求发送验证码  现在短信接口不可用
         return this.$http.post(apiRoot+'/user/sendcode', {phone: phone})
       },
       checkCode (code) { // 验证用户输入的验证码是否正确
         return this.$http.post(apiRoot+'/user/verifycode', {code: code})
       },
-      register (data) { // 提交信息用户注册时填写的信息data给服务器端  进行注册     ????进行调整:会进行短信验证码验证 现在返回  验证码错误
+      register (data) { // 提交信息用户注册时填写的信息data给服务器端  进行注册
         return this.$http.post(https(apiRoot+'/user/register'), data)
       },
       uploadAvatar (avatar) { // 上传头像 文件po上去 服务器端根据session里用户信息自动处理绑定关系

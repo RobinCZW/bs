@@ -56,8 +56,8 @@ class FileItem extends Sson { // 文件对象 要存本地端的
     this.size = 0 // 大小
     this.downTime = 0 // 下载时间
     this.nativeURL = '' // 本地路径
-    this.failReason = ''
-    this.transfer = null
+    this.failReason = '' // ????
+    this.transfer = null // ????
     this.progress = { // 下载进度
       loaded: 0,
       total: 0
@@ -94,7 +94,7 @@ const DownloadManager = Vue.extend({ // DownLoadManager 定义
     },
     deleteByMd5 (md5) { // 通过md5删除文件   也集成在DownloadManager里
       let chain = Promise.resolve()
-      let task = this.byMd5[md5]
+      let task = this.byMd5[md5] // 通过md5直接获得了整个文件对象  对象里带所有信息(本地路径)
       if (task.transfer) {
         task.transfer.onprogress = null
         task.transfer.abort()
@@ -192,12 +192,12 @@ const DownloadManager = Vue.extend({ // DownLoadManager 定义
       return next()
       // return `${this.dir.nativeURL}/${file.name}`
     },
-    save () { // items发生变化(也就是有新的要下载的文件加入items时),执行save 把items信息序列化成json文件存储. 之后每次DownloadManager初始化都先从json读取items,再将新文件加入items,再写入json
+    save () { // items发生变化(也就是有新下载的文件加进items时),执行save 把items信息序列化成json文件存储. 之后每次DownloadManager初始化都先从json读取items,再将新文件加入items,再写入json
       let json = {
-        items: this.items.map(i => i.toJSON()) // 已下载的文件对象集合items 每个文件对象都格式化成 JSON格式数据(此时还是对象)  存在 json文件里  key值是item 成 item[{},{},{},...]
+        items: this.items.map(i => i.toJSON()) // 已下载的文件对象集合items 每个文件对象都格式化成 JSON格式数据  存在 json对象里  key值是item 成 item[{},{},{},...]
       }
       localStorage.setItem(LSKey, JSON.stringify(json)) // 直接调用本地存储设置一个键值对 key是downloadManager  把存有已下载文件信息的 json数据 序列化成JSON字符串存储
-    },
+    }, // ????
     load () { // 从本地存储中读取 文件信息  每次DownloadManager初始化的时候最先执行了load 把本地json存的items(已下载文件)都序列化出来存在items了,初始化完毕后DownloadManager又将新要下载的文件加入items再写入json
       // read from local storage
       let json = localStorage.getItem(LSKey)
