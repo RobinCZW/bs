@@ -27,7 +27,7 @@ export default {
     items () { // 商品列表items
       return services.good.store.list
     },
-    buyClass () { // 是否营业
+    buyClass () { // 不营业的话 buy-disable为true  按钮置灰     营业的话class是buy 按钮为蓝色
       return {'buy-disable': this.closed}
     }
   },
@@ -86,7 +86,7 @@ export default {
 
 <style lang="less" scoped>
 .print-page {
-  .sep {
+  .sep { // 分割线
     display: block;
     height: 1px;
     background-color: #bbb;
@@ -102,8 +102,8 @@ export default {
       }
       position: relative;
       display: inline-block;
-      white-space: nowrap;
-      transition: all 3s linear;
+      white-space: nowrap; // 不换行
+      transition: all 3s linear; // 参数一:css属性 (该css属性变化时 过渡效果开始) 参数二:完成过渡所需时间 参数三:ease慢速开始 中间快 慢速结束   linear匀速
     }
   }
   .buy {

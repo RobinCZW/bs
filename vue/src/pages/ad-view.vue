@@ -50,7 +50,7 @@ export default {
   .pic {
     width: 100%;
     height: 100%;
-    background-size: cover;
+    background-size: cover; // cover最大化背景
     background-repeat: no-repeat;
     background-position: center;
   }
@@ -58,13 +58,13 @@ export default {
     position: absolute;
     right: 5%;
     top: 8%;
-    border-radius: 10px;
+    border-radius: 10px; // 圆角半径
     background-color: rgba(0, 0, 0, 0.5);
     width: 60px;
     height: 30px;
     padding: 3px;
-    text-align: center;
-    box-sizing: border-box;
+    text-align: center; // 文本居中
+    box-sizing: border-box; // 盒子模型的盒子大小 border-box 表示 width和height就是盒子的大小  自动去除padding后才是内容的宽高
     color: white;
     font-size: 14px;
   }

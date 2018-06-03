@@ -9,6 +9,7 @@
         group
           .avatar
             img(v-show='userAvatar', :src='userAvatar')
+            // qq注册或登录的用户 头像无需上传 自带qq头像
           x-input(:value.sync='nickname', placeholder='填写昵称')
           cell(:title='schoolInfo', is-link, @click='school.show=true')
         group
@@ -26,7 +27,7 @@ import Cell from 'vux-components/cell'
 import Radio from 'vux-components/radio'
 import services from 'utils/services'
 
-export default { // qq快捷注册后 完善学校 昵称 性别 级别 学院 等信息
+export default { // qq快捷注册后 完善学校 昵称 性别 级别 学院 等信息   (此页面因为qq登录授权码过期 无法重现qq注册 完善的页面)
   components: {
     Group,
     XInput,

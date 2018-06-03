@@ -23,12 +23,12 @@ export default { // 启动app 经过splash页 广告页后 如未登录 进入fi
     Complete // qq快速注册后的完善信息  选择学校等
   },
   computed: {
-    action () { // 判断到 /first的操作 是什么  默认select-action(选择登录还是注册的界面 现仅剩登录 含splash) 即上面引入的 SelectAction 该页面不是弹起的
+    action () { // 判断到 /first的操作是什么    各个注册页面都是堆叠的子页面 所以各个子页面修改action时  堆叠页面随时调整显示
       let action = this.$route.query.action
       if (['login', 'register', 'findpw', 'complete'].includes(action)) {
         return action
       }
-      return 'select-action'
+      return 'select-action' // 默认action为 select-action
     }
   },
   route: {

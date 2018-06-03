@@ -1,10 +1,13 @@
 <template lang="pug">
 .home-root
-  mt-tab-container(:active.sync='active', :swipeable='false')
-    mt-tab-container-item.tabc-item(v-for='tab in tabs', :id='tab.id')
+  mt-tab-container(:active.sync='active', :swipeable='true')
+    //- active是当前激活的tab名   swipeable是切换效果
+    mt-tab-container-item.tabc-item(v-for='tab in tabs', :id='tab.id') 
       component(:is='tab.id', @changetab='onChangeTab', :attaching='attaching')
+      //- 子组件(就是五个主页面组件)  通过id判断   attaching废弃(原处理课程列表记忆问题)
   mt-tabbar(:selected.sync='active', transition2='tabbar', v-show='tabShow')
     mt-tab-item(v-for='tab in tabs', :id='tab.id')
+      //- mt-tab-item自带icon的slot
       img(slot='icon',:src='dynIcon(tab)')
       | {{ tab.name }}
 </template>
@@ -49,7 +52,7 @@ export default {
       tabs: [{
         id: 'print',
         name: '打印', // tab名
-        icon: iconPair('5') // 图标
+        icon: iconPair('5') // 获取图标路径
       }, {
         id: 'course',
         name: '资料',
@@ -94,14 +97,14 @@ export default {
   height: 100%;
   bottom: 0;
   .mint-tabbar > .mint-tab-item.is-selected {
-    background-color: #fafafa !important;
+    background-color: #fafafa !important; // !important让该组件内部所有color都等于该值
   }
   .tabc-item {
     width: 100%;
   }
 }
 
-.page-transition {
+.page-transition { // 以下都是 mint-ui 自带  动画效果
   transition: all .3s ease;
   /*transition: all .3s ease;*/
 }

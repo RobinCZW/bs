@@ -1,17 +1,22 @@
 <template lang="pug">
 .step2
   image-clipper(v-ref:clipper, :visible.sync='clipper', :src='avatarData', @clip='onClip')
+  // 选择头像 裁剪头像的页面
   school-picker(:visible.sync='school.show', :academy='true', @school='school.school=$arguments[0]', @academy='school.academy=$arguments[0]', @year='school.enterYear=$arguments[0]')
+  // 选择学校的页面
   //- div(v-transfer-dom)
   //-   mt-popup(style='width: 100%;', :visible.sync='school.yearShow', position='bottom')
   //-     mt-picker(:slots='school.yearSlot', @change='onYearChange', :visible-item-count='5', v-ref:picker)
   group.first-group
     .upload
+      // upload带添加头像图标  preview和img都无背景 直到img内容不为空才显示img覆盖
       .preview
         img(v-show='previewData.length > 0', :src='previewData')
+        // 添加头像的图标
       input-file.float(:style='inputFileStyle', :src='uploadIcon', @data='clipAvatar')
     x-input(:value.sync='nickname', placeholder='填写昵称', v-ref:phone)
     cell(:title='schoolInfo', is-link, @click='school.show=true')
+    // 点击后 school.show置为true  school-picker显示
     // cell(:title='enterYearTitle', is-link, @click='openYear')
   group
     radio(:options="['男', '女']", :value.sync='gender')
@@ -84,7 +89,7 @@ export default {
     onClip (src) {
       this.previewData = src
     },
-    step2 () { // 点击下一步
+    step2 () { // 点击下一步    router查询register   参数为 step:3 并向上级父组件index.vue触发父组件的info事件
       let go = () => {
         this.$emit('info', {
           gender: this.gender,
@@ -95,7 +100,7 @@ export default {
         })
         const t76 = true // #76 直接注册  不验证教务处了
         if (t76) {
-          this.$emit('register')
+          this.$emit('register') // 触发父组件register()
         } else {
           // 跳过 验证教务处帐号 这步
           this.$router.go({
@@ -143,7 +148,7 @@ export default {
         opacity: this.previewData.length > 0 ? '0' : '1'
       }
     },
-    schoolInfo () {
+    schoolInfo () { // 选择学校栏  默认为选择学校  否则返回学校和学院名
       let info = this.school
       let text = ''
       if (info.school.name && info.academy.name) {

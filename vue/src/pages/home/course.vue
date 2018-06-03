@@ -211,7 +211,7 @@ export default {
     'user.CollegeId': function (val) {
       this.syncSchool()
     },
-    maskShow (val) { // ????
+    maskShow (val) { // 点击搜索框 未输入搜索内容时  搜索框下面的整个区域会加一层透明层mask 点击透明层则退出搜索 该变量用以标记透明层
       if (val === false) {
         if (document.activeElement) {
           document.activeElement.blur()

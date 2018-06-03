@@ -39,13 +39,13 @@ export default {
         return
       }
       let form = {
-        name: this.name, // 已删除名字
+        name: this.name, // 已删除名字  填地址和电话即可
         addr: this.addr,
         phone: this.phone
       }
-      services.store.orderform = form // 个人信息存档  下次不用再填
+      services.store.orderform = form // 个人信息存档store.orderform  下次不用再填
       form.list = this.list
-      services.order.add(form).then(order => { // 先调用服务器接口 添加一个订单 并生成一个订单号uuid   (从返回的order里访问)
+      services.order.add(form).then(order => { // 先调用服务器接口(参数是用户地址/电话/商品list) 添加一个订单 并生成一个订单号uuid(返回的order里带uuid访问)
         services.utils.toast('提交成功')
         return services.order.pay(order.uuid) // 调用支付宝接口  参数是订单号uuid   uuid是调用add后后台生成的uuid对象
       }).then(() => {
@@ -71,14 +71,14 @@ export default {
     },
     list () {
       try {
-        return JSON.parse(this.$route.params.list)
+        return JSON.parse(this.$route.params.list) // list是父组件传下来的 [商品id,数量] 的二维数组 其实只有一组啦就是 [商品id,1]
       } catch (e) {
         return []
       }
     },
     items () {
       try {
-        let list = JSON.parse(this.$route.params.list) // 选中商品的list值(实际只有一个)    转化成 对象
+        let list = JSON.parse(this.$route.params.list) // 选中商品的列表(实际只有一个)    转化成 json对象
         return list.map(i => ({
           good: this.goodMap[i[0]], // i是list(对象数组) 里的单个对象  i[0]就是商品id
           count: i[1]
@@ -109,12 +109,13 @@ export default {
     padding: 10px;
     font-size: 10px;
     p {
-      text-indent: 20px;
+      text-indent: 20px; // 缩进20px
     }
   }
-  .order {
+  .order { // 按钮样式
     background-color: #508CEE;
     color: white;
+    width: 90%;
     &:active {
       background-color: darken(#508CEE, 5%);
       color: white;

@@ -120,7 +120,7 @@ export default { // 登录页面
 .login-frag {
   height: 100%;
   .scroll-layout {
-    overflow-y: auto;
+    overflow-y: auto; // 左右溢出则提供滚动
     height: 100%;
   }
   .container {
@@ -144,7 +144,7 @@ export default { // 登录页面
         width: 80%;
         text-align: center;
         margin-bottom: 10px;
-        &:before , &:after {
+        &:before , &:after { // 在该元素(tip)的前(before)后(after)插入内容(各插入一条线)
           content: " ";
           display: inline-block;
           background: #bbb; //rgb(80, 140, 238);
@@ -155,11 +155,11 @@ export default { // 登录页面
       }
     }
     .form {
-      vertical-align: middle;
+      vertical-align: middle; // 将此元素放置在父元素的垂直中部
       display: table-cell;
       .links {
         color: rgb(80, 140, 238);
-        .forgotpw {
+        .forgotpw { // 忘记密码样式
           margin: 0 auto;
           text-align: center;
           padding: 5px;
@@ -167,17 +167,17 @@ export default { // 登录页面
           //width: 6em;
           float: left;
         }
-        .register {
+        .register { // 注册样式
           float: right;
           padding: 5px;
           padding-right: 10px;
         }
       }
-      .blue {
+      .blue { // 按钮样式
         background-color: #508cee;
         color: #fff;
       }
-      .blue:active {
+      .blue:active { // active 点击时的样式
         background-color: #407cde;
       }
       .quick-group {

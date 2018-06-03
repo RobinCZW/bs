@@ -376,7 +376,7 @@ var services = new Vue({
       register (data) { // 提交信息用户注册时填写的信息data给服务器端  进行注册     ????进行调整:会进行短信验证码验证 现在返回  验证码错误
         return this.$http.post(https(apiRoot+'/user/register'), data)
       },
-      uploadAvatar (avatar) { // 上传头像
+      uploadAvatar (avatar) { // 上传头像 文件po上去 服务器端根据session里用户信息自动处理绑定关系
         let formData = new FormData()
         formData.append('avatar', avatar)
         return this.$http.post(apiRoot+'/user/upload', formData)

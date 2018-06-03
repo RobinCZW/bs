@@ -11,7 +11,7 @@ import Group from 'vux-components/group'
 import Cell from 'vux-components/cell'
 import XInput from 'vux-components/x-input'
 import Icon from 'vux-components/icon'
-export default { // ????
+export default { // 验证教务处的脚本 废弃
   components: {
     Group,
     Cell,

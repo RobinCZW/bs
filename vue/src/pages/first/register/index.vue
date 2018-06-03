@@ -8,6 +8,7 @@
         .container
           .form
             step1(@info='stepInfo')
+            // 子组件触发info事件时, 执行stepInfo()
       .scroll-layout
         .container
           .form
@@ -16,6 +17,7 @@
         .container
           .form
             step3(@info='stepInfo', @register='register', @reset='onReset', :prompt='prompt')
+            // step3废弃 所有含prompt都废弃
 </template>
 
 <script>
@@ -47,7 +49,7 @@ export default { // 整个注册流程的主体 action为register的都进入这
         enterYear: this.enterYear
       }
     },
-    stepInfo (o) {
+    stepInfo (o) { // 把传入的 键值对 类型的值赋值给该组件的变量
       Object.keys(o).forEach(key => {
         this[key] = o[key]
       })
@@ -61,7 +63,7 @@ export default { // 整个注册流程的主体 action为register的都进入这
     register () { // 注册
       this.loading = true
       let data = this.regInfo()
-      if (this.prompt) {
+      if (this.prompt) { // prompt废弃
         let moreData = this.schoolMore
         data.schoolMore = this.sendBack || {}
         Object.keys(moreData).forEach(i => data.schoolMore[i] = moreData[i])
@@ -113,10 +115,10 @@ export default { // 整个注册流程的主体 action为register的都进入这
     }
   },
   computed: {
-    step () { // 进入哪一步
+    step () { // step值决定显示哪个页面   默认step为1
       return this.$route.query.step || 1
     },
-    switchStyle () {
+    switchStyle () { // 选择显示那个step
       return {
         transform: `translate3d(0,-${(this.step - 1) * 100}%,0)`
         // marginTop: `-${(this.step - 1) * 100}%`

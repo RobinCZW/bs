@@ -33,23 +33,23 @@ export default { // 商品item
 @h-pad: 10px;
 @height: 120px;
 @img-width: @height / 1.414;
-.good-item {
+.good-item { // 整个商品项
   height: @height;
   padding: @v-pad @h-pad;
   position: relative;
-  img {
+  img { // 配图
     width: @img-width;
     height: @height;
   }
-  .detail {
+  .detail { // 信息
     position: absolute;
     top: @v-pad;
     bottom: @v-pad;
     right: @v-pad;
     left: @img-width + @h-pad * 3;
-    .name {
+    .name { // 商品名
       overflow: hidden;
-      text-overflow: ellipsis;
+      text-overflow: ellipsis; // 溢出的文字显示省略号
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;

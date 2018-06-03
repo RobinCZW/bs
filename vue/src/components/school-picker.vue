@@ -9,10 +9,13 @@ div
         .wrap(:style='switchStyle')
           .list(v-show='page==1', transition='fade')
             mt-cell(v-for='item in list', :title='item.name', @click='clickSchool(item)', is-link)
+            // 学校列表
           .acadmy-list(v-show='page==2', transition='fade')
             mt-cell(v-for='item in academyList', :title='item.name', @click='clickAcademy(item)', is-link)
+            // 学院列表
           .year-list(v-show='page==3', transition='fade')
             mt-cell(v-for='item in years', :title='item', @click='clickYear(item)', is-link)
+            // 入学年份列表
 </template>
 
 <script>

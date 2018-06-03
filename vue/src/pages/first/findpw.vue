@@ -19,7 +19,7 @@ import XButton from 'vux-components/x-button'
 import Loading from 'vux-components/loading'
 import services from 'utils/services'
 
-export default { // 点击找回密码后  找回密码的页面
+export default { // 点击找回密码后  找回密码的页面  (此页面无短信验证码 暂时无法再现)
   components: {
     Group,
     XInput,

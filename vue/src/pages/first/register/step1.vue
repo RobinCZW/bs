@@ -2,13 +2,13 @@
 .step1
   group
     x-input(:value.sync='phone', placeholder='输入手机号码', type='number', is-type='china-mobile', v-ref:phone)
-    .inline
-      .div-line
-      .inline-input
-        x-input(:value.sync='code', placeholder='输入短信验证码')
-      .vline
-      button.inline-btn(:style='codeStyle', @click='sendCode') {{ codeHint }}
-      .clear
+    //- .inline
+    //-   .div-line
+    //-   .inline-input
+    //-     x-input(:value.sync='code', placeholder='输入短信验证码')
+    //-   .vline
+    //-   button.inline-btn(:style='codeStyle', @click='sendCode') {{ codeHint }}
+    //-   .clear
     x-input(:value.sync='password', type='password', placeholder='输入密码, 长度不小于6位')
   group
     x-button.blue(@click='step1') 下一步
@@ -70,7 +70,7 @@ export default {
     },
     step1 () { // 点击下一步
       let go = () => {
-        this.$emit('info', {
+        this.$emit('info', { // 向router.go组件(register的index组件,其实也是step1组件的父组件)  提交 info动作  并提供参数为 setp 2
           phone: this.phone,
           password: this.password
         })

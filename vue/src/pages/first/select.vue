@@ -16,11 +16,11 @@ export default { // 选择登录还是注册的页面  现在注册已经隐藏 
       return {
         append: true,
         query: {
-          action: 'login'
+          action: 'login' // action被修改成 login      index.vue显示login对应的页面
         }
       }
     },
-    registerLink () {
+    registerLink () { // 废弃
       return {
         append: true,
         query: {
@@ -28,7 +28,7 @@ export default { // 选择登录还是注册的页面  现在注册已经隐藏 
         }
       }
     },
-    imgStyle () { // splash图片网上提顶部栏的高度  空出下面空间给 "登录" 按钮
+    imgStyle () { // 背景图往上提顶部栏的高度  空出下面空间给 "登录" 按钮
       return {
         marginTop: -services.config.statusBarHeight + 'px'
       }
@@ -54,16 +54,16 @@ button {
     width: 100%;
   }
   .footer {
-    box-shadow: 0 0 8px rgba(0,0,0,.33);
+    box-shadow: 0 0 8px rgba(0,0,0,.33); // 边框阴影
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
     
     background-color: rgba(255,255,255,1);
-    opacity: 1;
+    opacity: 1; // 不透明度  1为不透明
 
-    .btn-group {
+    .btn-group { // 登录按钮样式
       width: 90%;
       height: 40px;
       margin: 20px auto;
@@ -83,7 +83,7 @@ button {
       .login {
         width: 100%;
       }
-      .right {
+      .right { // 废弃 注册按钮
         float: right;
         border-width: 0;
         color: #fff;

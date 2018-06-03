@@ -1,6 +1,7 @@
 <template lang="pug">
 .page-base(:style='pageStyle')
   x-header.page-header(:left-options='leftOptions')
+    // 带后退功能的header bar  左边方法是leftOptions(后退)
     slot(slot='left', name='left')
     slot(slot='right', name='right')
     | {{ title }}
@@ -29,9 +30,9 @@ export default { // 页面模版(左右各一个控件  中间一个标题  下�
   },
   computed: { // 计算属性 监控父组件的高度
     contentHeight () {
-      return this.parentHeight - 46 // 底部tab栏高度46扣去后是页面模版的高度
+      return this.parentHeight - 46 // 状态栏高度46扣去后是页面模版中 内容 的高度
     },
-    pageStyle () { // 用html语法的style属性直接动态指定一下页面的高度 = 内容高度数值px
+    pageStyle () { // 用html语法的style属性直接动态指定一下页面 内容 的高度 = 内容高度数值px
       return {
         height: this.contentHeight + 'px'
       }
